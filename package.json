@@ -1,0 +1,30 @@
+{
+  "name": "nakkad",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Nakkad — decode any Indian job offer into real monthly in-hand pay, compare offers, and detect fake-offer scams. 100% offline, on-device, zero tracking.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "icon": "node scripts/make-icon.mjs"
+  },
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "typescript": "^5.6.0",
+    "vite": "^6.0.0",
+    "vite-plugin-pwa": "^0.21.0",
+    "vitest": "^2.1.0"
+  },
+  "license": "MIT"
+}
