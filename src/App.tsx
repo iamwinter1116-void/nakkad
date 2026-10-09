@@ -3,7 +3,7 @@ import { decodeCtc, DEFAULT_CTC_INPUT, projectCtc, compareOffers, type CtcInput,
 import { scanOfferText } from './lib/scam'
 import { fmt } from './lib/tax'
 
-type Tab = 'decode' | 'compare' | 'shield'
+type Tab = 'decode' | 'compare' | 'shield' | 'support'
 
 const STATES: { code: PTState; name: string }[] = [
   { code: 'GJ', name: 'Gujarat' }, { code: 'MH', name: 'Maharashtra' },
@@ -164,6 +164,7 @@ export default function App() {
                   ))}
                 </tbody>
               </table>
+              <p className="note">Years 2–5 apply today's FY 2026-27 slabs — future Budgets will shift them; treat as a trend, not a quote.</p>
             </div>
           )}
         </>
@@ -248,9 +249,47 @@ export default function App() {
         </>
       )}
 
+      {tab === 'support' && (
+        <>
+          <div className="card">
+            <strong style={{ fontSize: '1rem' }}>Keep Nakkad free for every fresher</strong>
+            <p className="note" style={{ marginTop: '0.5rem' }}>
+              Built at ₹0, runs at ₹0 — no ads, no tracking, no server. Your data never leaves this device.
+              If Nakkad saved you from a bad offer (or a fake one), here's how to keep it alive:
+            </p>
+          </div>
+          <div className="card">
+            <strong>UPI tip jar</strong>
+            <p className="note" style={{ marginTop: '0.5rem' }}>
+              Scan with any UPI app. ₹21 funds a month of hosting (it's free, so honestly: funds chai), ₹199 pre-buys the Playbook.
+            </p>
+            <div style={{ display: 'grid', placeItems: 'center', padding: '1rem 0' }}>
+              <img src="qr.png" alt="UPI QR code — scan to tip Nakkad" width="180" height="180"
+                   style={{ borderRadius: '8px', border: '1px solid var(--border)' }} />
+              <code style={{ marginTop: '0.5rem', fontSize: '0.85rem' }}>nakkad-app@upi</code>
+            </div>
+          </div>
+          <div className="card">
+            <strong>Offer Season Playbook — ₹199</strong>
+            <p className="note" style={{ marginTop: '0.5rem' }}>
+              Negotiation scripts, 12 annotated fake-offer letters, the bond/variable/relocation clause checklist.
+              Updates every Budget. <em>Link goes live with the Gumroad listing.</em>
+            </p>
+          </div>
+          <div className="card">
+            <strong>Campus ambassador</strong>
+            <p className="note" style={{ marginTop: '0.5rem' }}>
+              Run a 20-minute offer-verification workshop with the Scam Shield tab in your college.
+              You get the Playbook free + credit for every referral that tips.
+            </p>
+          </div>
+        </>
+      )}
+
       <footer>
         Estimates only — your payslip is the contract. Rates verified for FY 2026-27 ·
         Report fraud: 1930 / cybercrime.gov.in
+        <br /><a href="#support" onClick={(e) => { e.preventDefault(); setTab('support') }}>Support Nakkad → keep it free</a>
       </footer>
     </div>
   )
