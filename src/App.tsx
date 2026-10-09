@@ -197,7 +197,7 @@ export default function App() {
                     </td>
                   </tr>
                   <tr><td className="k">Annual difference</td><td>₹{fmt(Math.abs(cmp.annualDelta))}</td></tr>
-                  <tr><td className="k">Retirals difference (A − B)</td><td>₹{fmt(cmp.retiralsDelta)}</td></tr>
+                  <tr><td className="k">Retirals difference (A − B)</td><td className={cmp.retiralsDelta >= 0 ? 'pos' : 'neg'}>{cmp.retiralsDelta >= 0 ? '' : '− '}₹{fmt(Math.abs(cmp.retiralsDelta))}</td></tr>
                 </tbody>
               </table>
               <p className="note">
