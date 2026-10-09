@@ -39,28 +39,28 @@ function useOfferState(initial: number) {
 
 const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v))
 
-function OfferFields(o: ReturnType<typeof useOfferState>) {
+function OfferFields({ o, p }: { o: ReturnType<typeof useOfferState>; p: string }) {
   return (
     <>
-      <label htmlFor="ctc">Annual CTC (₹ lakh)</label>
-      <input id="ctc" type="number" inputMode="decimal" value={o.ctc} onChange={(e) => o.setCtc(e.target.value)} placeholder="12" min="1" />
+      <label htmlFor={`ctc-${p}`}>Annual CTC (₹ lakh)</label>
+      <input id={`ctc-${p}`} type="number" inputMode="decimal" value={o.ctc} onChange={(e) => o.setCtc(e.target.value)} placeholder="12" min="1" />
       <div className="row">
         <div>
-          <label htmlFor="basic">Basic (% of CTC)</label>
-          <input id="basic" type="number" inputMode="numeric" value={o.basicPct} onChange={(e) => o.setBasicPct(e.target.value)} />
+          <label htmlFor={`basic-${p}`}>Basic (% of CTC)</label>
+          <input id={`basic-${p}`} type="number" inputMode="numeric" value={o.basicPct} onChange={(e) => o.setBasicPct(e.target.value)} />
         </div>
         <div>
-          <label htmlFor="var">Variable (% of CTC)</label>
-          <input id="var" type="number" inputMode="numeric" value={o.variablePct} onChange={(e) => o.setVariablePct(e.target.value)} />
+          <label htmlFor={`var-${p}`}>Variable (% of CTC)</label>
+          <input id={`var-${p}`} type="number" inputMode="numeric" value={o.variablePct} onChange={(e) => o.setVariablePct(e.target.value)} />
         </div>
       </div>
-      <label htmlFor="pf">EPF basis</label>
-      <select id="pf" value={o.pfMode} onChange={(e) => o.setPfMode(e.target.value as 'full' | 'statutory')}>
+      <label htmlFor={`pf-${p}`}>EPF basis</label>
+      <select id={`pf-${p}`} value={o.pfMode} onChange={(e) => o.setPfMode(e.target.value as 'full' | 'statutory')}>
         <option value="full">Full basic (common in IT)</option>
         <option value="statutory">Statutory cap ₹15,000/mo</option>
       </select>
-      <label htmlFor="state">Work state (professional tax)</label>
-      <select id="state" value={o.state} onChange={(e) => o.setState(e.target.value as PTState)}>
+      <label htmlFor={`state-${p}`}>Work state (professional tax)</label>
+      <select id={`state-${p}`} value={o.state} onChange={(e) => o.setState(e.target.value as PTState)}>
         {STATES.map((s) => <option key={s.code} value={s.code}>{s.name}</option>)}
       </select>
     </>
@@ -147,7 +147,7 @@ export default function App() {
       {tab === 'decode' && (
         <>
           <div className="card">
-            <OfferFields {...a} />
+            <OfferFields o={a} p="a" />
           </div>
           {!a.input && <div className="card"><p className="hero-sub">Enter a CTC of at least ₹1 lakh to see the real picture.</p></div>}
           {breakdownA && <Breakdown b={breakdownA} />}
@@ -175,12 +175,12 @@ export default function App() {
             <div className={`card ${cmp?.winner === 'A' ? 'winner' : ''}`}>
               {cmp?.winner === 'A' && <span className="badge">Winner</span>}
               <strong>Offer A</strong>
-              <OfferFields {...a} />
+              <OfferFields o={a} p="a" />
             </div>
             <div className={`card ${cmp?.winner === 'B' ? 'winner' : ''}`}>
               {cmp?.winner === 'B' && <span className="badge">Winner</span>}
               <strong>Offer B</strong>
-              <OfferFields {...b} />
+              <OfferFields o={b} p="b" />
             </div>
           </div>
           {cmp && breakdownA && breakdownB && (
