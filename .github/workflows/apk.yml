@@ -1,0 +1,43 @@
+name: Android APK (free CI build)
+
+on:
+  push:
+    branches: [main]
+    paths: ['src/**', 'public/**', 'android/**', 'capacitor.config.json', '.github/workflows/apk.yml']
+  workflow_dispatch:
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+
+      - name: Sync Capacitor Android
+        run: npx cap add android 2>/dev/null || true
+        # If android/ isn't committed, generate fresh; else just sync
+      - run: npx cap sync android
+
+      - name: Build debug APK (no signing keys needed)
+        run: |
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon -Dorg.gradle.jvmargs="-Xmx2g"
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: nakkad-debug-apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+          retention-days: 90
